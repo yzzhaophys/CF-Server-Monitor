@@ -127,7 +127,11 @@ Go Agent 的完整更新记录见 [cfsm-agent releases](https://github.com/huila
 3. 创建 Worker，并选择从 GitHub 仓库导入本项目。
 4. 构建命令填写 `npm run build:frontend`。
 5. 部署命令使用 `npx wrangler deploy`。
-6. 部署完成后，在 Worker 的 Variables and Secrets 中添加 `API_SECRET`。
+6. 首次部署前核对 `wrangler.toml` 的 Worker 名称与控制台一致，并填写目标 D1 的 `database_id`。本 fork 的部署配置明确绑定已选择的数据库；Durable Object 由原生 migration 初始化。
+7. 在 Worker 的 Variables and Secrets 中添加运行时 Secret `API_SECRET`，保存并部署后验证初始化与登录。
+
+使用此方式时只保留 Workers Builds 作为生产部署入口，不同时启用下面的 Actions 部署。
+上游同步和部署是两个步骤；首次需确认同步进入生产分支后实际触发构建。
 
 图文教程：<https://huilang.me/cf-server-monitor-setup/>
 

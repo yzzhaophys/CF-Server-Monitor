@@ -1,4 +1,4 @@
-# Cloudflare Workers 配置，线上已由deploy.yml接管，这里仅供本地测试
+# Cloudflare Workers Builds 配置；生产使用连接 GitHub 仓库的原生构建入口。
 name = "cf-server-monitor"
 main = "src/index.js"
 compatibility_date = "2024-12-01"
@@ -20,10 +20,10 @@ binding = "ASSETS"
 [[d1_databases]]
 binding = "DB"
 database_name = "server-monitor-db"
+database_id = "d8b5a8cd-99f4-415e-b3b6-ea0ed2e5c793"
 
 # Durable Objects：实时指标广播中心
-# 注意：首次部署前需要执行 `wrangler durable-object create MetricsBroadcaster --class MetricsBroadcaster`
-# 或者在部署后，wrangler 会自动创建对应的 DO namespace。
+# 首次部署由下方 migration 创建 DO namespace，无需另外手动创建。
 [[durable_objects.bindings]]
 name = "METRICS_BROADCASTER"
 class_name = "MetricsBroadcaster"
